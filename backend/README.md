@@ -15,10 +15,15 @@ This is the backend API server for the Waikāne flooding monitoring system, prov
 ### Stream Data
 - `GET /api/waikane_stream` - Get Waikāne stream height data
 - `GET /api/waiahole_stream` - Get Waiahole stream height data
+- `GET /api/stream_trend` - Gets Waikāne and Waiahole stream direction
 
 ### Tide Data
 - `GET /api/waikane_tide_curve` - Gets Waikāne tide level data
 - `GET /api/waikane_tides` - Gets Waikāne high and low tides data
+- `GET /api/next_tide` - Gets the next time from current time
+
+### Rain Data
+- `GET /api/rain_data` - Gets amount of rainfall data
 
 ### Health Check
 - `GET /api/health` - Server health status
@@ -73,11 +78,6 @@ This is the backend API server for the Waikāne flooding monitoring system, prov
 
 - `Waikane_Flood_Visuals.ipynb` - Jupyter notebook for data analysis and visualization
 - `run_notebook.py` - Script to execute notebook programmatically
-
-## Generated Outputs
-
-- `stream.png` - Stream height visualizations
-- `tides.png` - Tide level charts
 
 ## Configuration
 

@@ -3,6 +3,7 @@ from flask_cors import CORS
 import json
 import os
 import subprocess
+import sys
 from datetime import datetime
 
 # --- Flask App Setup ---
@@ -16,10 +17,12 @@ WAIKANE_STREAM_FILE = os.path.join(BASE_DIR, 'Waikane_Stream_Data.json')
 WAIAHOLE_STREAM_FILE = os.path.join(BASE_DIR, 'Waiahole_Stream_Data.json')
 WAIKANE_TIDE_CURVE_FILE = os.path.join(BASE_DIR, 'Waikane_Tide_Curve.json')
 RAIN_DATA_FILE = os.path.join(BASE_DIR, 'Rain_Data.json')
+NEXT_TIDE_DATA_FILE = os.path.join(BASE_DIR, 'Next_Tide_Data.json')
+STREAM_TREND_DATA_FILE = os.path.join(BASE_DIR, 'Stream_Trend_Data.json')
 
 def update_data():
     try:
-        subprocess.run(["python", "run_notebook.py"], check=True)
+        subprocess.run([sys.executable, "run_notebook.py"], check=True)
         return True
     except subprocess.CalledProcessError as e:
         print("Notebook execution failed:", e)
@@ -70,6 +73,26 @@ def get_rain_data():
     update_data()  # Update data before serving
     try:    
         with open(RAIN_DATA_FILE, 'r') as f:
+            data = json.load(f)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route('/api/next_tide', methods=['GET'])
+def get_next_tide_data():
+    update_data()  # Update data before serving
+    try:
+        with open(NEXT_TIDE_DATA_FILE, 'r') as f:
+            data = json.load(f)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route('/api/stream_trend', methods=['GET'])
+def get_stream_trend_data():
+    update_data()  # Update data before serving
+    try:
+        with open(STREAM_TREND_DATA_FILE, 'r') as f:
             data = json.load(f)
         return jsonify(data)
     except Exception as e:
